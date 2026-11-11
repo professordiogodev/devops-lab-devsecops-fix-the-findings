@@ -1,0 +1,3 @@
+# Exceptions to the scanner. Every entry needs a justification and an expiry:
+#   CVE-XXXX-YYYY   # reason: ...  owner: ...  expires: 2026-12-31
+# The best number of entries is zero.
