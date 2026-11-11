@@ -2,9 +2,17 @@
 
 ## The situation
 
-Security ran one scanner over a small Pollie service and sent you its output. It is long, it is red, and it ends with the sentence every engineer dreads: *"please remediate before the next release"*. Eleven vulnerable dependencies. Two keys that look a lot like AWS credentials. A container that runs as root, pulls `latest` and downloads a file from the internet without checking it.
+A pull request has appeared in your queue. The author is a scanner bot, the title is *"Security findings: please remediate"*, and the review comments are long and red:
 
-Anyone can run a scanner. The job is what comes after: **deciding** what each finding means, **fixing** what can be fixed, **justifying in writing** what cannot (with a name and an expiry date, so that "temporary" does not mean "forever"), and **putting the scanner in the pipeline** so that the list never grows back unnoticed. Finally you will find out why a pipeline that was green yesterday can be red this morning without anyone touching the code.
+> **bot** `requirements.txt`: 11 vulnerable dependencies. Merge blocked.
+>
+> **bot** `config/old.env`, line 4: this looks like an AWS access key. Merge blocked.
+>
+> **bot** `Dockerfile`: runs as root, pulls `latest`, downloads a file without checking it. Merge blocked.
+>
+> **bot** *"please remediate before the next release"*
+
+Anyone can run a scanner. The job is what comes after: **deciding** what each finding means, **fixing** what can be fixed, **justifying in writing** what cannot (with a name and an expiry date, so "temporary" never means "forever"), and **putting the scanner in the pipeline** so the list cannot grow back unnoticed. Last, you will see why a pipeline that was green yesterday can be red this morning without anyone touching the code.
 
 > **Your mission**
 > - Run the scanner and read its report: vulnerabilities, secrets, misconfigurations
@@ -17,7 +25,7 @@ Anyone can run a scanner. The job is what comes after: **deciding** what each fi
 
 ---
 
-## Part 0 - Set the scene
+## Part 0 - Check out the pull request
 
 Fork this repository, clone your fork and run:
 
@@ -29,7 +37,7 @@ It checks that Trivy is installed and writes `service/settings.py` with **two fa
 
 ---
 
-## Part 1 - Read the report
+## Part 1 - Read the review comments
 
 ```bash
 trivy fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --ignore-unfixed .
